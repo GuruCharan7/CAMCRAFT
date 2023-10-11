@@ -1,15 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import pre from '../Images/b4.webp'
 import prev from '../Images/montage.jpg'
 import next from '../Images/b3.webp'
 import Footer from '../Components/Footer'
-import tripod from '../Images/tripod.png'
-import lens from '../Images/lens.png'
-import studio from '../Images/studio.png'
+import tripod1 from '../Images/o3.1.png'
+import tripod2 from '../Images/o3.png'
+import { getCourses } from '../Service/Api'
+import { createSearchParams, useNavigate } from 'react-router-dom'
+import '../CSS/Courses.css'
 
 export default function AllCourses() {
 
+  const [courses, setCourses] = useState([]);
 
+  useEffect(() => {
+    getAllCourse();
+  }, [])
+
+  async function getAllCourse() {
+    try {
+      await getCourses().then((res) => {
+        setCourses(res.data)
+      });
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  let navigate = useNavigate();
+
+  let handleCatalog = (id) => {
+    console.log(id);
+    navigate({
+      pathname: "/catalog",
+      search: createSearchParams({
+        id: id
+      }).toString()
+    })
+  }
   return (
     <>
       <div className="container-fluid">
@@ -56,47 +85,39 @@ export default function AllCourses() {
           </div>
         </div>
       </div>
-      <div className='container-fluid'>
-        <div className='row d-flex justify-content-center' style={{ paddingTop: '5%' }}>
-          <div className='col-md-3'>
-            <div className="card" style={{ width: "300px" }}>
-              <img src={tripod} className="card-img-top" alt="..." style={{ padding: '20%' }} />
-              <div className="card-body">
-                <h5 className="card-title">Camera, Exposure & Photography</h5>
-                {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                <br />
-                <a href="#" className="btn btn-primary">ENROLL NOW</a>
-              </div>
-            </div>
-          </div>
-          <div className='col-md-3'>
-            <div className="card" style={{ width: "300px" }}>
-              <img src={lens} className="card-img-top" alt="..." style={{ padding: '20%' }} />
-              <div className="card-body">
-                <h5 className="card-title">Fashion & Glamour Photography</h5>
-                {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                <br />
-                <a href="#" className="btn btn-primary">ENROLL NOW</a>
-              </div>
-            </div>
-          </div>
-          <div className='col-md-3'>
-            <div className="card" style={{ width: "300px" }}>
-              <img src={studio} className="card-img-top" alt="..." style={{ padding: '20%' }} />
-              <div className="card-body">
-                <h5 className="card-title">Introduction to Digital Photography</h5>
-                {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                <br />
-                <a href="#" className="btn btn-primary">ENROLL NOW</a>
-              </div>
-            </div>
+      <section className='online'>
+        <div className='container-fluid'>
+          <div className='row d-flex justify-content-center' style={{ paddingTop: '5%' }}>            
+            {
+              courses.map((current) => {
+                return (
+                  <div className='col-md-4'>                    
+                  <div className="shadow-lg p-3 mb-5 bg-white rounded">
+                    <div className='box'>
+                      <div className='img'>
+                        <img src={tripod2} /> 
+                        <img src={tripod1} alt='' className='show' />                      
+                      </div>
+                      <h1>{current.courseName}</h1>
+                      <h6>{current.duration}</h6>
+                      <span>Instructor : {current.instructor_id.instructorName}</span>     
+                      <br />                
+                      <br />                
+                      <span onClick={() => { handleCatalog(current.course_id) }}>ENROLL NOW</span>
+                    </div>
+                  </div>
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
-      </div>
-      <div style={{ paddingTop: '3%' }}>
+        {/* </div> */}
+      </section >
+      < div style={{ paddingTop: '3%' }}>
         <hr />
         <Footer />
       </div>
-    </>
+    </ >
   )
 }

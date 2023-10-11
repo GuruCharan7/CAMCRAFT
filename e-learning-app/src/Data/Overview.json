@@ -3,7 +3,7 @@
     {
         "id": 1,
         "content": "COURSE ENROLLED",
-        "numbers":5,
+        "numbers":2,
         "imagePath":"course-enrolled.png"
     },
     {
@@ -19,7 +19,7 @@
         "imagePath":"course-completion.png"
     },
     {
-        "id": 3,
+        "id": 4,
         "content": "COURSE EXPIRED",
         "numbers":0,
         "imagePath":"expired.png"

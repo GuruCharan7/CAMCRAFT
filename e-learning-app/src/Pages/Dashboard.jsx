@@ -23,8 +23,8 @@ export default function Dashboard() {
 
         <div className='row'>
           <div className='col-md-3'>
-            <h4 style={{ display: 'flex' }}>HELLO {user.username} !</h4>
-            <p style={{ display: 'flex' }}>Let's Learn something new</p>
+            <h4 style={{ display: 'flex' }}>HELLO {localStorage.getItem("name")} !</h4>
+            <p style={{ display: 'flex' }}>Let's Start Everything where we stopped</p>
           </div>
         </div>
 

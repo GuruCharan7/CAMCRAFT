@@ -31,9 +31,21 @@ export default function SideNavBar() {
                 </button>
               </li>
               <li className="nav-item my-1">
+                <button onClick={() => { navigate('/courses') }} className="nav-link text-white" aria-current="page">
+                  <i className='bi bi-book'></i>
+                  <span className='ms-2 d-none d-sm-inline'>EXPLORE COURSES</span>
+                </button>
+              </li>
+              <li className="nav-item my-1">
                 <button onClick={() => { navigate('/mycourses') }} className="nav-link text-white" aria-current="page">
                   <i className='bi bi-book'></i>
                   <span className='ms-2 d-none d-sm-inline'>MY COURSES</span>
+                </button>
+              </li>
+              <li className="nav-item my-1">
+                <button onClick={() => { navigate('/library') }} className="nav-link text-white" aria-current="page">
+                  <i className='bi bi-book'></i>
+                  <span className='ms-2 d-none d-sm-inline'>RESOURCE LIBRARY</span>
                 </button>
               </li>
 

@@ -1,9 +1,11 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom/dist'
+import { Link, useNavigate } from 'react-router-dom'
 import '../CSS/SignUp.css'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { signup } from '../Features/user';
+import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignUp() {
 
@@ -11,21 +13,36 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-  const handleSingup = (e) => {
+  let dispatch = useDispatch();
 
-    e.preventDefault();
-    if (email.trim() && username.trim() && password.trim()) {
+  const handleSingup = async (e) => {
+    e.preventDefault()
 
-      console.log("IN");
-      navigate("/dashboard")
+    try {
+      if (username.trim() && email.trim() && password.trim()) {
+        const response = await axios.post('http://localhost:8080/api/v1/auth/register', {
+          name: username,
+          email: email,
+          password: password,
+          role: "STUDENT"
+        });
+
+        if (response.status === 200) {
+          // dispatch(signup({ name: username, email: email, password: password }));
+          toast.success("Account created Successfully");
+          setTimeout(() => {
+            navigate("/login");
+          },3000)
+        }
+      }
+      else {
+        toast.error("Enter Valid Credentials");
+      }
     }
-    else {
-
-      console.log("OUT");
+    catch (error) {
+      console.log("error");
     }
   }
 
@@ -35,16 +52,15 @@ export default function SignUp() {
         <div className="signup-credentials">
           <h3 style={{ padding: '2%' }}>CamCraft</h3>
           <form
-            className="signup-form"
-            onSubmit={handleSingup}
-          >
+            className="signup-form">
             <fieldset>
               <div className="form-group name optional user_name" style={{ padding: '2%' }}>
                 <input
                   className="form-control string name optional form-control-xl js-name-field"
                   placeholder="Username"
                   type="text"
-                  onChange={(e) => { setUsername(e.target.value) }}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
@@ -53,7 +69,8 @@ export default function SignUp() {
                   className="form-control string email optional form-control-xl js-email-field"
                   placeholder="Email"
                   type="email"
-                  onChange={(e) => { setEmail(e.target.value) }}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -62,7 +79,8 @@ export default function SignUp() {
                   className="form-control form-control-xl js-password-field"
                   placeholder="Password"
                   type="password"
-                  onChange={(e) => { setPassword(e.target.value) }}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 {/* <span className="a-input-group__action js-show-password-action" role="button">
@@ -75,8 +93,9 @@ export default function SignUp() {
 
             </fieldset>
             <div className="btn-toolbar form-actions t-login-button" style={{ padding: '2%' }}>
-              <button name="button" className="a-button" 
-              onClick={() => dispatch(signup({username:username, email:email, password:password}))}>
+              <button type="button" name="button" className="a-button" onClick={handleSingup}
+              //onClick={() => dispatch(signup({username:username, email:email, password:password}))}
+              >
                 SIGN UP
               </button>
             </div>
@@ -87,7 +106,7 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
     </div>
   )
 }
