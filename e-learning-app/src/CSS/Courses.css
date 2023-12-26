@@ -1,5 +1,6 @@
 .online {
     text-align: center;
+    display: flex;
   }
   .online .box {
     box-shadow: 0 5px 25px -2px rgb(0 0 0 / 6%);
@@ -48,4 +49,18 @@
   }
   .online .box:hover h1 {
     color: #fff;
+  }
+
+  .carousel-container{
+    padding-top: 2.7%;
+    padding-bottom: 4%;
+  }
+
+  #tips #carouselExampleCaptions {
+    margin: auto;
+    width: 900px;
+  }
+  
+  #tips {
+    max-height: 100%;
   }

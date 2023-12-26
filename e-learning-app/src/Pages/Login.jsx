@@ -24,9 +24,9 @@ export default function Login() {
     toast.success("Logged in Successfully");
     setTimeout(() => {
       if (role === "ADMIN")
-        navigate('/adminDashboard');
+        navigate('/admin/adminDashboard');
       else
-        navigate('/dashboard');
+        navigate('/student/dashboard');
     }, 3000)
   }
 

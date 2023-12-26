@@ -5,6 +5,7 @@ import { getEnroll } from '../Service/Api';
 import tripod1 from '../Images/o3.1.png'
 import tripod2 from '../Images/o3.png'
 import { useNavigate } from 'react-router-dom';
+import '../CSS/MyCourses.css'
 
 export default function MyCourses() {
 
@@ -51,14 +52,14 @@ export default function MyCourses() {
                         <br />
                     </div>
                 </div>
-                <section className='online'>
-                    <div className='container-fluid'>
-                        <div className='row '>
+                <section className='online' id='mycourses'>
+                    <div className='container-fluid d-flex justify-content-start'>
+                        <div className='row'>
                             {
                                 details.map((current) => {
                                     return (
-                                        <div className='col-md-4'>
-                                            <div className="card shadow-lg p-3 mb-5 bg-white rounded" key={current.course_id}>
+                                        <div className='col'>
+                                            <div className="card shadow-lg p-3 mb-5 bg-white rounded" style={{width: '18rem',maxHeight: "400px", minHeight: "350px"}} key={current.course_id}>
                                                 <div className='box'>
                                                     <div className='img'>
                                                         <img src={tripod2} />
@@ -69,7 +70,7 @@ export default function MyCourses() {
                                                     <span>Instructor : {current.instructor_id.instructorName}</span>
                                                     <br />
                                                     <br />
-                                                    <span onClick={() => {navigate('/tutorial') }}>VIEW COURSE</span>
+                                                    <span onClick={() => {navigate('/student/tutorial') }}>VIEW COURSE</span>
                                                 </div>
                                             </div>
                                         </div>

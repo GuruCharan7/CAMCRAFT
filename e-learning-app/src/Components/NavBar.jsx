@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getUserById } from '../Service/Api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,24 +11,13 @@ function NavBar() {
 
     const username = localStorage.getItem("name")
 
-    // useEffect(() => {
-    //     getUser();
-    // }, [])
-
-    // async function getUser() {
-    //     try {
-    //         await getUserById().then((res) => {
-    //             setDetails(res.data)
-    //         });
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //     }
-    // }
-
     let handleLogout = () => {
 
         toast.success("Logout Successfully");
+        localStorage.removeItem("id");
+        localStorage.removeItem("token");
+        localStorage.removeItem("name");
+        localStorage.removeItem("Role");
         setTimeout(() => {
             navigate('/');
         }, 3000)
@@ -62,11 +50,11 @@ function NavBar() {
                                 <div className="dropdown-menu">
 
                                     <button className="dropdown-item" >
-                                        <i class="bi bi-person f5-4"
-                                            onClick={() => { navigate('/profile') }} style={{ fontSize: '90%' }}> PROFILE</i>
+                                        <i className="bi bi-person f5-4"
+                                            onClick={() => { navigate('/student/profile') }} style={{ fontSize: '90%' }}> PROFILE</i>
                                     </button>
                                     <button className="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <i class="bi bi-box-arrow-left"
+                                        <i className="bi bi-box-arrow-left"
                                             style={{ fontSize: '90%' }}> LOGOUT</i>
                                     </button>
                                 </div>

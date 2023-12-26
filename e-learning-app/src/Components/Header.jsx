@@ -17,6 +17,9 @@ const Header = () => {
                                 <li>
                                     <Link to='/login' style={{ textDecoration: 'none' }}>LOGIN</Link>
                                 </li>
+                                <li>
+                                    <Link to='/student/community' style={{ textDecoration: 'none' }}>COMMUNITY</Link>
+                                </li>
                             </div>
                             <div className="col-4 d-flex justify-content-end">
                                 {/* <li>

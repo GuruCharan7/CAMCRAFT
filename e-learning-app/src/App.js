@@ -19,31 +19,55 @@ import Mail from './Components/Mail';
 import AdminHome1 from './Pages/AdminHome1';
 import AdminHome2 from './Pages/AdminHome2';
 import ResourceLibrary from './Pages/ResourceLibrary';
+import ChattApp from './Components/Chat/ChatApp';
+import AdminHome3 from './Pages/AdminHome3';
+import AdminProfile from './Pages/AdminProfile';
+import User from './Layout/User';
+import Admin from './Layout/Admin';
+import PageNotFound from './Pages/PageNotFound';
+import PostTweet from './Pages/PostTweet';
+import Feedback from './Pages/Feedback';
+import AdminFeedback from './Pages/AdminFeedback';
 
 
 function App() {
   return (
     <div className="App">
-        <Routes>
-          <Route path='/' element={<Home />} />
+        <Routes>          
+          <Route path='/' element={<Home />} />        
+          <Route path='/404error' element={<PageNotFound />} />        
           <Route path='/courses' element={<AllCourses/>} />
-          <Route path='/catalog' element={<CourseCatalog />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/adminDashboard' element={<AdminDashboard />} />
-          <Route path='/instructorDashboard' element={<InstructorDashboard />} />
-          <Route path='/mycourses' element={<MyCourses />} />
-          <Route path='/home' element={<MyHome />} />
-          <Route path='/manageUser' element={<AdminHome1 />} />
-          <Route path='/manageCourse' element={<AdminHome2 />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/footer' element={<Footer />} />
           <Route path='/termscondition' element={<TermsConditions />} />  
-          <Route path='/tutorial' element={<VideoTutorial />} />  
-          <Route path='/mail' element={<Mail />} />  
-          <Route path='/library' element={<ResourceLibrary />} />  
-          
+
+
+          <Route path='/student' element={<User/>}>
+            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='home' element={<MyHome />} />
+            <Route path='mycourses' element={<MyCourses />} />
+            <Route path='catalog' element={<CourseCatalog />} />
+            <Route path='profile' element={<Profile />} />
+            <Route path='tutorial' element={<VideoTutorial />} />  
+            <Route path='mail' element={<Mail />} />  
+            <Route path='community' element={<ChattApp />} />  
+            <Route path='library' element={<ResourceLibrary />} /> 
+            <Route path='feedback' element={<Feedback />} />
+            {/* <Route path='post' element={<PostTweet />} /> */}
+          </Route>
+
+
+          <Route path='/admin' element={<Admin/>}>
+            <Route path='adminDashboard' element={<AdminDashboard />} />          
+            <Route path='manageUser' element={<AdminHome1 />} />
+            <Route path='manageCourse' element={<AdminHome2 />} />
+            <Route path='manageInstructor' element={<AdminHome3 />} />
+            <Route path='feedback' element={<AdminFeedback />} />
+            <Route path='adminProfile' element={<AdminProfile />} />
+          </Route>
+            
+
+
         </Routes>
     </div>
   );

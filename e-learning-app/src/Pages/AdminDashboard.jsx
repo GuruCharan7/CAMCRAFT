@@ -1,19 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../CSS/Dashboard.css'
 import NavBar from '../Components/NavBar'
 import { useSelector } from 'react-redux';
 import AdminNavbar from '../Components/AdminNavbar';
-import Records from "../Data/AdminOverview.json";
 import { Card, CardContent, CardMedia, Typography } from '@mui/material'
+import { getCountUser,getCountInstructor,getCountCourse } from '../Service/Api.js'
+import AdminTopbar from '../Components/AdminTopbar';
 
 export default function AdminDashboard() {
 
     const user = useSelector(state => state.user.value)
+    const [users, setUsers] = useState(0);
+    const [instructor, setInstructor] = useState(0);
+    const [course, setCourse] = useState(0);
+
+    useEffect(() => {
+        fetchUserCount();
+    }, [])
+
+    async function fetchUserCount() {
+        try {
+
+            const response1 = await getCountUser()
+            setUsers(response1.data)
+            const response2 = await getCountInstructor()
+            setInstructor(response2.data)
+            const response3 = await getCountCourse()
+            setCourse(response3.data)
+        }
+        catch (error) {
+            console.log("error");
+        }
+    }
 
     return (
         <div>
             <div className='navbar-container'>
-                <NavBar />
+                <AdminTopbar />
             </div>
             <div>
                 <AdminNavbar />
@@ -31,57 +54,122 @@ export default function AdminDashboard() {
 
                 <div className='row'>
                     <div className='col-md-3'>
-                        <br />
                         <h4 style={{ display: 'flex' }}>OVERVIEW</h4>
                         <br />
                     </div>
                 </div>
                 <div className='row'>
-                    {
-                        Records && Records.map((element) => {
-                            return (
-                                <div className='col-md-3'>
-                                    <div key={element.id}>
+                    <div className='col-md-3'>
+                        <div >
+                            <div className="Card" >
+                                <Card
+                                    sx={{
+                                        display: 'flex',
+                                        maxWidth: 250,
+                                        maxHeight: 200,
+                                        bgcolor: "#005A9C",
+                                    }}
+                                >
 
-                                        <div className="Card" >
-                                            <Card
-                                                sx={{
-                                                    display: 'flex',
-                                                    maxWidth: 250,
-                                                    maxHeight: 200,
-                                                    bgcolor: "#005A9C",
-                                                }}
-                                            >
+                                    <CardMedia
+                                        component="img"
+                                        image={require('../Images/noOfUsers.png')}
+                                        sx={{ width: 90, height: 80, marginTop: '12%', paddingLeft: '7%' }} />
+                                    <CardContent>
+                                        <Typography
+                                            variant="h3"
+                                            color={"white"}
+                                        >
+                                            {users}
+                                        </Typography>
+                                        <Typography
+                                            variant="h6"
+                                            color={"white"}
+                                        >
+                                            NO OF USERS
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
 
-                                                <CardMedia
-                                                    component="img"
-                                                    image={require('../Images/' + element.imagePath)}
-                                                    sx={{ width: 90, height: 80, marginTop: '12%', paddingLeft: '4%' }} />
-                                                <CardContent>
-                                                    <Typography
-                                                        variant="h3"
-                                                        color={"white"}
-                                                    >
-                                                        {element.numbers}
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="h6"
-                                                        color={"white"}
-                                                    >
-                                                        {element.content}
-                                                    </Typography>
-                                                </CardContent>
-                                            </Card>
+                                <br />
 
-                                            <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-md-3'>
+                        <div >
+                            <div className="Card" >
+                                <Card
+                                    sx={{
+                                        display: 'flex',
+                                        maxWidth: 260,
+                                        maxHeight: 200,
+                                        bgcolor: "#005A9C",
+                                    }}
+                                >
 
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    }
+                                    <CardMedia
+                                        component="img"
+                                        image={require('../Images/noOfInstructors.png')}
+                                        sx={{ width: 90, height: 80, marginTop: '12%', paddingLeft: '7%' }} />
+                                    <CardContent>
+                                        <Typography
+                                            variant="h3"
+                                            color={"white"}
+                                        >
+                                            5
+                                        </Typography>
+                                        <Typography
+                                            variant="h6"
+                                            color={"white"}
+                                        >
+                                            NO OF INSTRUCTORS
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
 
+                                <br />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-md-3'>
+                        <div >
+                            <div className="Card" >
+                                <Card
+                                    sx={{
+                                        display: 'flex',
+                                        maxWidth: 250,
+                                        maxHeight: 200,
+                                        bgcolor: "#005A9C",
+                                    }}
+                                >
+
+                                    <CardMedia
+                                        component="img"
+                                        image={require('../Images/noOfCourses.png')}
+                                        sx={{ width: 90, height: 80, marginTop: '12%', paddingLeft: '7%' }} />
+                                    <CardContent>
+                                        <Typography
+                                            variant="h3"
+                                            color={"white"}
+                                        >
+                                            5
+                                        </Typography>
+                                        <Typography
+                                            variant="h6"
+                                            color={"white"}
+                                        >
+                                            NO OF COURSES
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+
+                                <br />
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

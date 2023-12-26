@@ -18,22 +18,34 @@ export default function AdminNavbar() {
           <hr className='text-white d-none d-sm-block'></hr>
           <ul className="nav nav-pills flex-column" id='parent'>
             <li className="nav-item my-1">
-              <button onClick={() => { navigate('/adminDashboard') }} className="nav-link text-white" aria-current="page">
+              <button onClick={() => { navigate('/admin/adminDashboard') }} className="nav-link text-white" aria-current="page">
                 <i className='bi bi-speedometer2'></i>
                 <span className='ms-2 d-none d-sm-inline'>DASHBOARD</span>
               </button>
             </li>
 
             <li className="nav-item my-1">
-              <button onClick={() => { navigate('/manageUser') }} className="nav-link text-white" aria-current="page">
+              <button onClick={() => { navigate('/admin/manageUser') }} className="nav-link text-white" aria-current="page">
                 <i className='bi bi-person'></i>
                 <span className='ms-2 d-none d-sm-inline'>MANAGE USERS</span>
               </button>
             </li>
             <li className="nav-item my-1">
-              <button onClick={() => { navigate('/manageCourse') }} className="nav-link text-white" aria-current="page">
+              <button onClick={() => { navigate('/admin/manageInstructor') }} className="nav-link text-white" aria-current="page">
+                <i className='bi bi-person'></i>
+                <span className='ms-2 d-none d-sm-inline'>MANAGE INSTRUCTORS</span>
+              </button>
+            </li>
+            <li className="nav-item my-1">
+              <button onClick={() => { navigate('/admin/manageCourse') }} className="nav-link text-white" aria-current="page">
                 <i className='bi bi-book'></i>
                 <span className='ms-2 d-none d-sm-inline'>MANAGE COURSES</span>
+              </button>
+            </li>
+            <li className="nav-item my-1">
+              <button onClick={() => { navigate('/admin/feedback') }} className="nav-link text-white" aria-current="page">
+                <i className='bi bi-clipboard-data'></i>
+                <span className='ms-2 d-none d-sm-inline'>FEEDBACKS</span>
               </button>
             </li>
 

@@ -15,7 +15,7 @@ export default function Profile() {
             </div>
 
             <div>
-                <PersonalInfo />
+                <PersonalInfo />                
             </div>
 
         </div>

@@ -18,14 +18,14 @@ export default function SideNavBar() {
             <hr className='text-white d-none d-sm-block'></hr>
             <ul className="nav nav-pills flex-column" id='parent'>
               <li className="nav-item my-1">
-                <button onClick={() => { navigate('/dashboard') }} className="nav-link text-white" aria-current="page">
+                <button onClick={() => { navigate('/student/dashboard') }} className="nav-link text-white" aria-current="page">
                   <i className='bi bi-speedometer2'></i>
                   <span className='ms-2 d-none d-sm-inline'>DASHBOARD</span>
                 </button>
               </li>
 
               <li className="nav-item my-1">
-                <button onClick={() => { navigate('/home') }} className="nav-link text-white" aria-current="page">
+                <button onClick={() => { navigate('/student/home') }} className="nav-link text-white" aria-current="page">
                   <i className='bi bi-house'></i>
                   <span className='ms-2 d-none d-sm-inline'>HOME</span>
                 </button>
@@ -37,15 +37,27 @@ export default function SideNavBar() {
                 </button>
               </li>
               <li className="nav-item my-1">
-                <button onClick={() => { navigate('/mycourses') }} className="nav-link text-white" aria-current="page">
+                <button onClick={() => { navigate('/student/mycourses') }} className="nav-link text-white" aria-current="page">
                   <i className='bi bi-book'></i>
                   <span className='ms-2 d-none d-sm-inline'>MY COURSES</span>
                 </button>
               </li>
               <li className="nav-item my-1">
-                <button onClick={() => { navigate('/library') }} className="nav-link text-white" aria-current="page">
+                <button onClick={() => { navigate('/student/library') }} className="nav-link text-white" aria-current="page">
                   <i className='bi bi-book'></i>
                   <span className='ms-2 d-none d-sm-inline'>RESOURCE LIBRARY</span>
+                </button>
+              </li>
+              <li className="nav-item my-1">
+                <button onClick={() => { navigate('/student/feedback') }} className="nav-link text-white" aria-current="page">
+                <i className="bi bi-clipboard-data"></i>
+                  <span className='ms-2 d-none d-sm-inline'>FEEDBACK</span>
+                </button>
+              </li>
+              <li className="nav-item my-1">
+                <button onClick={() => { navigate('/student/community') }} className="nav-link text-white" aria-current="page">
+                  <i className='bi bi-people'></i>
+                  <span className='ms-2 d-none d-sm-inline'>COMMUNITY</span>
                 </button>
               </li>
 

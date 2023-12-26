@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import '../CSS/ManageUsers.css'
-import { getAllUser } from '../Service/Api';
+import { deleteUserById, getAllUser } from '../Service/Api';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 export default function ManageUsers() {
 
@@ -13,14 +12,20 @@ export default function ManageUsers() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
-    const [isDelete, setisDelete] = useState(false);
+    const [isdelete,setisDelete] = useState(0);  
 
-    let navigate = useNavigate();
+    async function handleDelete(){
 
-    const needDelete = (id) => {
-        console.log(id);
-        setisDelete(true);
-    };
+        const response = await deleteUserById(isdelete);
+        if (response.status === 200) {
+            
+            console.log("Deleted");
+            toast.error("Account Deleted Successfully");
+            setTimeout(() => {
+                fetchUsers();               
+            }, 2000)            
+        }
+    }
 
     useEffect(() => {
         fetchUsers();
@@ -38,7 +43,7 @@ export default function ManageUsers() {
         }
     }
     const handleAdduser = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         try {
             if (name.trim() && email.trim() && password.trim() && role.trim()) {
@@ -50,11 +55,15 @@ export default function ManageUsers() {
                 });
 
                 if (response.status === 200) {
-                    // dispatch(signup({ name: username, email: email, password: password }));
                     toast.success("Account created Successfully");
                     setTimeout(() => {
-                        navigate("/manageUser");
-                    }, 3000)
+                        fetchUsers();
+                        for (let x of e.target) {
+                            if (x.type === 'submit') continue
+                            x.value = ''
+                        }
+                        document.querySelector("#adderButton").click()
+                    }, 2000)
                 }
             }
             else {
@@ -66,12 +75,13 @@ export default function ManageUsers() {
         }
     }
 
+
     return (
         <div>
             <h2 className="text-center">Users List</h2>
             <div className='row'>
                 <div className='col d-flex'>
-                    <button type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">ADD USER</button>
+                    <button id='adderButton' type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">ADD USER</button>
                 </div>
             </div>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -79,9 +89,10 @@ export default function ManageUsers() {
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalCenterTitle">ADD USER</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form onSubmit={handleAdduser}>
                                 <div class="form-group">
                                     <input onChange={(e) => { setName(e.target.value) }} type="text" class="form-control" id="exampleInputName1" placeholder="Enter name" />
                                 </div>
@@ -95,13 +106,13 @@ export default function ManageUsers() {
                                 </div>
                                 <br />
                                 <div class="form-group">
-                                    <input onChange={(e) => { setRole(e.target.value) }} type="text" class="form-control" id="exampleInputName1" placeholder="Enter role" />
+                                    <input onChange={(e) => { setRole(e.target.value) }} type="text" class="form-control" id="exampleInputRole1" placeholder="Enter role" />
                                 </div>
 
+                                <div class="modal-footer">
+                                    <button type="submit" className="btn btn-primary">Save User</button>
+                                </div>
                             </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onClick={handleAdduser}>Save User</button>
                         </div>
                     </div>
                 </div>
@@ -132,8 +143,8 @@ export default function ManageUsers() {
                                                 <td> {current.email}</td>
                                                 <td> {current.role}</td>
                                                 <td>
-                                                    <button onClick={() => { }} style={{ backgroundColor: '#005A9C', color: 'white' }} className="btn">Update </button>
-                                                    <button style={{ marginLeft: "10px" }} onClick={() => {needDelete(current.id)}} className="btn btn-danger">Delete </button>
+                                                    {/* <button onClick={() => { handleUpdate(current.uid) }} type='button' data-bs-toggle="modal" data-bs-target="#exampleUpdateCenter" style={{ backgroundColor: '#005A9C', color: 'white' }} className="btn">Update </button> */}
+                                                    <button type='button' data-bs-toggle="modal" data-bs-target="#exampleDeleteCenter" style={{ marginLeft: "10px" }} onClick={() => { setisDelete(current.uid) }} className="btn btn-danger">Delete </button>
                                                 </td>
                                             </tr>
 
@@ -142,9 +153,25 @@ export default function ManageUsers() {
                                 })
                             }
                         </tbody>
-
                     </table>
-
+                    <div className="modal fade" id="exampleDeleteCenter" tabindex="-1" aria-labelledby="exampleDeleteCenterTitle" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">CONFIRM DELETE</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    Are You Sure? Want To Delete
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Delete</button>
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
             <ToastContainer />

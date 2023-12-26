@@ -49,7 +49,7 @@ export default function CourseCatalog() {
                 console.log("IN");
                 toast.success("Enrolled Successfully");
                 setTimeout(() => {
-                    navigate('/mycourses');
+                    navigate('/student/mycourses');
                 }, 3000)
             }
         }

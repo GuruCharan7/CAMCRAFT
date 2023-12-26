@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../CSS/Profile.css'
+import { getUserById } from '../Service/Api';
 
 export default function PersonalInfo() {
 
-    let name = localStorage.getItem("name");
+    const [details, setDetails] = useState([]);
+
+    useEffect(() => {
+        getUserById().then((res) => {
+            setDetails(res.data);
+        })
+    }, [])
+
+    // console.log(details);
     return (
         <div>
             <img className='profile-header' src={require('../Images/profile.jpg')} />
@@ -18,7 +27,7 @@ export default function PersonalInfo() {
                             </div>
                             <div className="col-md-10 d-flex justify-content-start">
                                 <div className="card-body">
-                                    <h5 className="card-title" style={{ paddingTop: '2.9%' }}> {name} </h5>
+                                    <h5 className="card-title" style={{ paddingTop: '2.9%' }}> {details.name} </h5>
 
                                 </div>
                             </div>
@@ -36,12 +45,12 @@ export default function PersonalInfo() {
                                 <div className='row'>
                                     <div className='col'>
                                         <h6 className='card-title '>NAME</h6>
-                                        <p className="card-text ">{name}</p>
+                                        <p className="card-text ">{details.name}</p>
                                     </div>
                                     <br />
                                     <div className='col'>
                                         <h6 className='card-title '>EMAIL</h6>
-                                        <p className="card-text ">charanmenaka@gmail.com</p>
+                                        <p className="card-text ">{details.email}</p>
                                     </div>
                                     <div className='col'>
                                         <h6 className='card-title '>PHONE</h6>
@@ -49,17 +58,51 @@ export default function PersonalInfo() {
                                     </div>
                                     <div className='col'>
                                         <h6 className='card-title '>GENDER</h6>
-                                        <p className="card-text ">MALE</p>
+                                        <p className="card-text ">FEMALE</p>
                                     </div>
                                     <div className='col'>
                                         <h6 className='card-title '>PHONE</h6>
                                         <p className="card-text ">8903083176</p>
+                                    </div>
+                                    {/* <div className='col'>
+                                        <h6 className='card-title '>PASSWORD</h6>
+                                        <p className="card-text ">{details.password}</p>
+                                    </div> */}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='container-fluid w-100' >
+                    <div className="shadow-lg p-3 mb-5 bg-white rounded">
+                        <div className="card d-flex">
+                            <h5 className="card-header d-flex">PORTFOLIO</h5>
+                            <div className="card-body text-start">
+                                <div className='row'>
+                                    <div className='col'>
+                                        <div className="input-group">
+                                            <div className="custom-file">
+                                                <input className="form-control" type="file" id="formFile" />
+                                            </div>
+                                            <div className="input-group-prepend" style={{ paddingLeft: '0.2%' }}>
+                                                <button className="input-group-text bg-primary text-white" id="inputGroupFileAddon01">Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className='row'>
+                                    <div className='col'>
+                                        <img src={require("../Images/b3.webp")} style={{height:'40%'}}></img>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     )
